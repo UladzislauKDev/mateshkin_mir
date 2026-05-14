@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  /* Небо — продолжение атмосферы фоновой картинки */
+  background: linear-gradient(180deg, #c2e4ef 0%, #aed8e6 40%, #9acfe0 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Nunito', 'Segoe UI', Arial, sans-serif;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Облачки на фоне */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(ellipse 140px 55px at 12% 16%,  rgba(255,255,255,0.55) 0%, transparent 80%),
+    radial-gradient(ellipse 100px 42px at 72% 10%,  rgba(255,255,255,0.45) 0%, transparent 80%),
+    radial-gradient(ellipse  75px 32px at 90% 28%,  rgba(255,255,255,0.35) 0%, transparent 80%),
+    radial-gradient(ellipse  55px 24px at 42%  7%,  rgba(255,255,255,0.40) 0%, transparent 80%),
+    radial-gradient(ellipse  60px 26px at 55% 22%,  rgba(255,255,255,0.25) 0%, transparent 80%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+#root {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+}

@@ -1,0 +1,238 @@
+.page-slide {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 16px;
+  font-family: 'Nunito', 'Segoe UI', Arial, sans-serif;
+  container-type: inline-size;
+}
+
+.page-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* ── Заставка ── */
+.title-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4cqw;
+}
+
+.title-text {
+  font-size: 8cqw;
+  font-weight: 900;
+  color: #002060;
+  text-shadow: 0 2px 0 rgba(255, 255, 255, 0.65);
+  text-align: center;
+  line-height: 1.2;
+}
+
+.start-btn {
+  background: linear-gradient(145deg, #002a70, #003da0);
+  color: #EADD7C;
+  border: 3px solid #EADD7C;
+  border-radius: 50px;
+  padding: 0.55em 2.5em;
+  font-size: 2.4cqw;
+  font-weight: 900;
+  font-family: 'Nunito', sans-serif;
+  cursor: pointer;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  box-shadow: 0 5px 22px rgba(0, 20, 80, 0.35), 0 0 28px rgba(234, 221, 124, 0.22);
+  transition: all 0.22s ease;
+}
+
+.start-btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 32px rgba(0, 20, 80, 0.45), 0 0 44px rgba(234, 221, 124, 0.38);
+}
+
+.start-btn:active { transform: scale(0.96); }
+
+/* ── Меню (две деревянные таблички) ── */
+.menu-header-text {
+  position: absolute;
+  top: 7%;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 3cqw;
+  font-weight: 900;
+  color: #002060;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
+  z-index: 1;
+}
+
+.menu-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4cqw;
+  padding: 10% 10%;
+}
+
+.menu-card {
+  flex: 1;
+  height: 70%;
+  border-radius: 20px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10%;
+  padding: 5%;
+  background: linear-gradient(160deg, #ede3c0 0%, #d4c080 60%, #c8b070 100%);
+  border-top: 3px solid rgba(255, 255, 255, 0.55);
+  border-left: 2px solid rgba(255, 255, 255, 0.4);
+  border-right: 2px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 3px solid rgba(0, 0, 0, 0.15);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  transition: all 0.22s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.menu-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(90deg,
+    rgba(0, 0, 0, 0.015) 0px, rgba(0, 0, 0, 0.015) 1px,
+    transparent 1px, transparent 18px);
+}
+
+.menu-card:hover {
+  transform: translateY(-6px) rotate(-0.5deg);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.menu-card:active { transform: translateY(-2px) scale(0.97); }
+
+.menu-icon {
+  font-size: 8cqw;
+  position: relative;
+  z-index: 1;
+}
+
+.menu-label {
+  font-size: 2.2cqw;
+  font-weight: 900;
+  color: #3d2800;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Заголовок раздела ── */
+.page-header-text {
+  font-size: 3cqw;
+  font-weight: 900;
+  color: #002060;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
+  margin-bottom: 1.5cqw;
+  padding-bottom: 1cqw;
+  border-bottom: 2px solid rgba(0, 32, 96, 0.15);
+  flex-shrink: 0;
+}
+
+/* ── Список навигации (категории и задачи) ── */
+.list-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 6% 12%;
+  overflow: hidden;
+}
+
+.nav-list {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5cqw;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+.nav-list::-webkit-scrollbar { width: 6px; }
+.nav-list::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.08); border-radius: 4px; }
+.nav-list::-webkit-scrollbar-thumb { background: rgba(0, 0, 0, 0.25); border-radius: 4px; }
+
+.nav-item {
+  width: 100%;
+  border-radius: 14px;
+  padding: 1.4cqw 3cqw;
+  display: flex;
+  align-items: center;
+  font-size: 2.1cqw;
+  font-weight: 900;
+  color: #3d2800;
+  cursor: pointer;
+  background: linear-gradient(160deg, #ede3c0 0%, #e0d0a0 100%);
+  border-top: 2px solid rgba(255, 255, 255, 0.5);
+  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.12);
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.nav-item::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(90deg,
+    rgba(0, 0, 0, 0.01) 0px, rgba(0, 0, 0, 0.01) 1px,
+    transparent 1px, transparent 20px);
+}
+
+.nav-item:hover { transform: translateX(8px); box-shadow: 0 6px 18px rgba(0, 0, 0, 0.16); }
+.nav-item:active { transform: translateX(4px) scale(0.99); }
+
+.nav-item--soon {
+  opacity: 0.6;
+  cursor: default;
+}
+.nav-item--soon:hover { transform: none; box-shadow: 0 3px 12px rgba(0, 0, 0, 0.12); }
+
+.nav-item-text {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+}
+
+.nav-arrow {
+  position: relative;
+  z-index: 1;
+  opacity: 0.4;
+  font-size: 1.5cqw;
+  flex-shrink: 0;
+  transition: all 0.2s;
+}
+
+.nav-item:hover .nav-arrow { opacity: 1; transform: translateX(4px); }
+
+@media (max-width: 600px) {
+  .title-text { font-size: 10cqw; }
+  .start-btn { font-size: 3.5cqw; }
+  .menu-icon { font-size: 10cqw; }
+  .menu-label { font-size: 3cqw; }
+  .nav-item { font-size: 2.8cqw; padding: 2cqw 3cqw; }
+}
