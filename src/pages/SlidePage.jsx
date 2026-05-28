@@ -3,11 +3,13 @@ import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import slidesData from '../slides_data.json'
 import SlideRenderer from '../components/SlideRenderer'
 import AppShell from '../components/AppShell'
+import { gamesData } from '../lib/gamesData'
 
 const slideMap = {}
 slidesData.forEach(s => { slideMap[s.slide] = s })
 
-const OVERLAY_MS = 2600
+const OVERLAY_MS = 2200
+const COMPLETE_MS = 2000
 
 function getSlideType(slideId) {
   const s = slideMap[slideId]
@@ -30,23 +32,27 @@ const FIREWORK_COLORS = [
   '#ffffff', '#ff4d4d', '#7BF5FF', '#FFDC5E',
 ]
 
-function ResultOverlay({ type }) {
-  const isMolodets = type === 'molodets'
+function makeParticles(count, distBase, distStep, waves) {
+  return Array.from({ length: count }, (_, i) => {
+    const angle = (i / count) * 2 * Math.PI
+    const dist = distBase + (i % distStep) * 2.4
+    const delay = (Math.floor(i / (count / waves)) * 0.3).toFixed(2)
+    return {
+      dx: (Math.cos(angle) * dist).toFixed(2),
+      dy: (Math.sin(angle) * dist).toFixed(2),
+      color: FIREWORK_COLORS[i % FIREWORK_COLORS.length],
+      delay: `${delay}s`,
+      size: `${0.6 + (i % 3) * 0.35}cqw`,
+      radius: i % 4 === 1 ? '2px' : '50%',
+    }
+  })
+}
 
-  const particles = isMolodets
-    ? Array.from({ length: 36 }, (_, i) => {
-        const angle = (i / 36) * 2 * Math.PI
-        const dist = 8 + (i % 5) * 2.4
-        const delay = (Math.floor(i / 12) * 0.3).toFixed(2)
-        return {
-          dx: (Math.cos(angle) * dist).toFixed(2),
-          dy: (Math.sin(angle) * dist).toFixed(2),
-          color: FIREWORK_COLORS[i % FIREWORK_COLORS.length],
-          delay: `${delay}s`,
-          size: `${0.6 + (i % 3) * 0.35}cqw`,
-          radius: i % 4 === 1 ? '2px' : '50%',
-        }
-      })
+function ResultOverlay({ type }) {
+  const isComplete = type === 'complete'
+  const showParticles = type === 'molodets' || isComplete
+  const particles = showParticles
+    ? makeParticles(isComplete ? 56 : 36, isComplete ? 10 : 8, 5, 3)
     : []
 
   return (
@@ -67,9 +73,16 @@ function ResultOverlay({ type }) {
         />
       ))}
       <div className="result-overlay__card">
-        <div className="result-overlay__text">
-          {isMolodets ? 'МОЛОДЕЦ!' : 'Подумай ещё!'}
-        </div>
+        {isComplete ? (
+          <>
+            <div className="result-overlay__text">УРА!</div>
+            <div className="result-overlay__subtext">Задание пройдено!</div>
+          </>
+        ) : (
+          <div className="result-overlay__text">
+            {type === 'molodets' ? 'МОЛОДЕЦ!' : 'Подумай ещё!'}
+          </div>
+        )}
       </div>
     </div>
   )
@@ -79,11 +92,16 @@ export default function SlidePage() {
   const { id } = useParams()
   const navigate = useNavigate()
   const { state } = useLocation()
-  const returnTo = state?.returnTo ?? '/categories'
   const startId = parseInt(id) || 1
+  const gameData = gamesData[startId]
+  const returnTo = gameData
+    ? `/categories/${gameData.categorySlide}`
+    : (state?.returnTo ?? '/categories')
 
-  const [currentSlide, setCurrentSlide] = useState(startId)
-  const [history, setHistory] = useState([startId])
+  // Skip the game intro slide — its description is shown on GameIntroPage
+  const firstSlide = gameData ? startId + 1 : startId
+  const [currentSlide, setCurrentSlide] = useState(firstSlide)
+  const [history, setHistory] = useState([firstSlide])
   const [fading, setFading] = useState(false)
   const fadingRef = useRef(false)
   const [overlay, setOverlay] = useState(null)
@@ -104,7 +122,9 @@ export default function SlidePage() {
     if (overlay) return
     const type = getSlideType(num)
     if (type === 'molodets') {
-      setOverlay({ type: 'molodets', nextSlide: num + 1 })
+      const nextSlide = num + 1
+      const isLastQuestion = gameData ? num === gameData.lastMolodets : !slideMap[nextSlide]
+      setOverlay({ type: isLastQuestion ? 'complete' : 'molodets', nextSlide: isLastQuestion ? null : nextSlide })
       return
     }
     if (type === 'nepravilno') {
@@ -116,15 +136,21 @@ export default function SlidePage() {
 
   useEffect(() => {
     if (!overlay) return
+    const ms = overlay.type === 'complete' ? COMPLETE_MS : OVERLAY_MS
     const timer = setTimeout(() => {
       const { type, nextSlide } = overlay
       setOverlay(null)
-      if (type === 'molodets' && nextSlide && slideMap[nextSlide]) {
-        goToSlide(nextSlide)
+      if (type === 'complete') {
+        navigate(returnTo)
+      } else if (type === 'molodets' && nextSlide) {
+        // Skip any Неправильно slides that may come right after a МОЛОДЕЦ slide
+        let target = nextSlide
+        while (slideMap[target] && getSlideType(target) === 'nepravilno') target++
+        if (slideMap[target]) goToSlide(target)
       }
-    }, OVERLAY_MS)
+    }, ms)
     return () => clearTimeout(timer)
-  }, [overlay, goToSlide])
+  }, [overlay, goToSlide, navigate, returnTo])
 
   const goBack = useCallback(() => {
     if (overlay) { setOverlay(null); return }

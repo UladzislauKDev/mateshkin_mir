@@ -1,0 +1,17 @@
+export const gamesData = {
+  10:  { title: 'Обитатели страны',      categorySlide: 4, lastMolodets: 19  },
+  20:  { title: 'Кто по счёту?',          categorySlide: 4, lastMolodets: 35  },
+  36:  { title: 'Где больше?',            categorySlide: 4, lastMolodets: 51  },
+  52:  { title: 'Верно или неверно',      categorySlide: 4, lastMolodets: 70  },
+  71:  { title: 'Широкий или узкий',      categorySlide: 5, lastMolodets: 92  },
+  93:  { title: 'Толстый или тонкий',     categorySlide: 5, lastMolodets: 108 },
+  109: { title: 'Высокий или низкий',     categorySlide: 5, lastMolodets: 124 },
+  125: { title: 'Самый-самый',            categorySlide: 5, lastMolodets: 137 },
+  138: { title: 'Что за фигура?',         categorySlide: 6, lastMolodets: 174 },
+  175: { title: 'Найди такую же фигуру',  categorySlide: 6, lastMolodets: 184 },
+  185: { title: 'Где находится житель?',  categorySlide: 8, lastMolodets: 203 },
+  204: { title: 'Найди место бабочки',    categorySlide: 8, lastMolodets: 225 },
+  226: { title: 'День и ночь',            categorySlide: 9, lastMolodets: 241 },
+  242: { title: 'Сезоны года',            categorySlide: 9, lastMolodets: 254 },
+  255: { title: 'Что за время года?',     categorySlide: 9, lastMolodets: 279 },
+}

@@ -1,4 +1,5 @@
 import slidesData from '../slides_data.json'
+import { gamesData } from './gamesData'
 
 const slideMap = {}
 slidesData.forEach(s => { slideMap[s.slide] = s })
@@ -28,12 +29,13 @@ export function getSlideTitle(slideId) {
   return match?.text ?? null
 }
 
-// Slides 1–9 are handled as custom JSX pages; 10+ go to SlideRenderer
+// Slides 1–9 are handled as custom JSX pages; games go to /game/:id for intro
 export function resolveSlideRoute(slideId) {
   if (slideId === 1) return '/'
   if (slideId === 2) return '/menu'
   if (slideId === 3) return '/categories'
   if (slideId >= 4 && slideId <= 9) return `/categories/${slideId}`
   if (slideId === 280) return '/reference'
+  if (gamesData[slideId]) return `/game/${slideId}`
   return `/slide/${slideId}`
 }

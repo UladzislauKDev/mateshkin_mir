@@ -30,9 +30,11 @@ export const BG_OPTIONS = [
 
 const LS_KEY = 'mateshkin_bg'
 
+const DEFAULT_IDX = 1 // Луг
+
 function readIdx() {
-  const v = parseInt(localStorage.getItem(LS_KEY) ?? '0')
-  return Number.isFinite(v) && v >= 0 && v < BG_OPTIONS.length ? v : 0
+  const v = parseInt(localStorage.getItem(LS_KEY) ?? DEFAULT_IDX)
+  return Number.isFinite(v) && v >= 0 && v < BG_OPTIONS.length ? v : DEFAULT_IDX
 }
 
 export function useBgTheme() {

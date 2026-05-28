@@ -5,6 +5,7 @@ import CategoriesPage from './pages/CategoriesPage'
 import TasksPage from './pages/TasksPage'
 import SlidePage from './pages/SlidePage'
 import ReferencePage from './pages/ReferencePage'
+import GameIntroPage from './pages/GameIntroPage'
 
 export default function App() {
   return (
@@ -14,6 +15,8 @@ export default function App() {
       <Route path="/categories" element={<CategoriesPage />} />
       <Route path="/categories/:slideId" element={<TasksPage />} />
       <Route path="/reference" element={<ReferencePage />} />
+      <Route path="/game/:id" element={<GameIntroPage />} />
+      <Route path="/game/:id/play" element={<SlidePage />} />
       <Route path="/slide/:id" element={<SlidePage />} />
     </Routes>
   )

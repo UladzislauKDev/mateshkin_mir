@@ -1,7 +1,6 @@
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useEffect } from 'react'
 import '../App.css'
-import { BG_OPTIONS, useBgTheme } from '../lib/bgTheme'
 
 const PARENT = {
   '/menu': '/',
@@ -31,8 +30,6 @@ export default function AppShell({ children, fading, onBack }) {
     return () => window.removeEventListener('keydown', fn)
   }, [handleBack, onBack])
 
-  const { idx, pick } = useBgTheme()
-
   const toggleFs = () => {
     if (!document.fullscreenElement) document.documentElement.requestFullscreen?.()
     else document.exitFullscreen?.()
@@ -53,19 +50,6 @@ export default function AppShell({ children, fading, onBack }) {
       <button className="fullscreen-btn" onClick={toggleFs} title="Полный экран">
         ⛶
       </button>
-      {!isHome && (
-        <div className="bg-picker">
-          {BG_OPTIONS.map((opt, i) => (
-            <button
-              key={i}
-              className={`bg-swatch${idx === i ? ' bg-swatch--active' : ''}`}
-              style={{ background: opt.swatch }}
-              onClick={() => pick(i)}
-              title={opt.name}
-            />
-          ))}
-        </div>
-      )}
     </div>
   )
 }
